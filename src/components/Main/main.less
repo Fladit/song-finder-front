@@ -8,26 +8,20 @@
   font-family: "Roboto Light", sans-serif;
   text-align: center;
   margin-top: 20px;
+
   &-track {
     font-size: 72px;
   }
+
   &-insert-title {
     font-size: 36px;
   }
-  input {
-    margin-top: 20px;
-    background-color: black;
-    border-radius: 10px;
-    border-color: red;
-    color: white;
-    width: 600px;
-    height: 40px;
-    padding-left: 15px;
-    font-size: 25px;
-  }
+
+
   &-youtube-player {
     margin-top: 25px;
   }
+
   button {
     margin-top: 10px;
     background-color: red;
@@ -36,4 +30,63 @@
     font-size: 24px;
     padding: 0 35px;
   }
+
+  &-container {
+    width: 560px;
+
+  &-text-fields {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    &-time {
+      border: 2px solid red;
+      border-radius: 12px;
+      padding: 0 5px;
+
+    }
+
+    &-text {
+      font-size: 24px;
+    }
+  }
+    &-range {
+      margin-top: 20px;
+      background-color: black;
+      border-radius: 10px;
+      border-color: red;
+      color: white;
+      width: 560px;
+      height: 40px;
+      font-size: 25px;
+    }
+
+}
+}
+
+.range-slider {
+  width: 200px;
+  height: 40px;
+  position: relative;
+}
+
+  .range-slider svg, .range-slider input[type=range] {
+    position: absolute;
+    margin-top: 20px;
+    background-color: black;
+    border-radius: 10px;
+    border-color: red;
+    width: 560px;
+    height: 40px;
+    font-size: 25px;
+    left: 0;
+  }
+
+input[type=range]::-webkit-slider-thumb {
+  z-index: 2;
+  position: relative;
+  top: 2px;
+  margin-top: -7px;
 }
