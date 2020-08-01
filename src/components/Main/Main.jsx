@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import "./main.css"
+import axios from "axios"
 
 const Main = () => {
+    const hostURL = "http://localhost:3001"
     const [link, setLink] = useState("");
-    const [checked, setChecked] = useState(true)
+    const [checked, setChecked] = useState(false)
     const [firstInputValue, setFirstInputValue] = useState(0)
     const [secondInputValue, setSecondInputValue] = useState(1)
     useEffect(() => {
@@ -14,8 +16,16 @@ const Main = () => {
         console.log(link);
         setLink(e.target.value);
     }
-    const findVideo = () => {
-
+    const findVideo = async (videoUrl) => {
+        try {
+            const res = await axios.post(`${hostURL}/duration`, {id: videoUrl});
+            console.log(`Duration: ${res.data.duration}`);
+            if (res.data.duration > 5)
+                setChecked(true);
+        }
+        catch (e) {
+            throw e;
+        }
     };
 
     const findSong = () => {
@@ -46,23 +56,23 @@ const Main = () => {
         <div className={"main"}>
             <div className={"main-track"}>Что за трек?</div>
             <div className={"main-insert-title"}>Вставьте ссылку на видео с YouTube</div>
-            <input type={"text"} value={link} onChange={changeLink} placeholder={"Введите ссылку на видео...."}/>
+            <input type={"text"} maxLength={70} className={"main-input-link"}  value={link} onChange={changeLink} placeholder={"Введите ссылку на видео...."}/>
             {checked? <div className={"main-container"}>
                 {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-                <iframe className={"main-youtube-player"} width="560" height="315" src="https://www.youtube.com/embed/bWv-bR_X-VM" frameBorder="0"
+                <iframe className={"main-youtube-player"} width="560" height="370" src={link} frameBorder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen/>
                         <div className={"main-container-text-fields"}>
-                            <div className={"main-container-text-fields-time"}>{"12:15:" + firstInputValue}</div>
+                            <div className={"main-container-text-fields-time"}>{firstInputValue}</div>
                             <div className={"main-container-text-fields-text"}> Введите промежуток </div>
-                            <div className={"main-container-text-fields-time"}>{"12:15:" + secondInputValue}</div>
+                            <div className={"main-container-text-fields-time"}>{secondInputValue}</div>
                         </div>
                 <div className={"range-slider"}>
                     <input type={"range"} min={"0"} max={"100"} step={"1"} value={firstInputValue} onChange={changeFirstInputValue} />
                     <input type={"range"} min={"0"} max={"100"} step={"1"} value={secondInputValue} onChange={changeSecondInputValue}/>
                 </div>
                         </div>:""}
-            <button onClick={!checked? findVideo : findSong}> Найти </button>
+            <button onClick={ () => !checked? findVideo(link) : findSong(link)}> Найти </button>
         </div>
     );
 };
