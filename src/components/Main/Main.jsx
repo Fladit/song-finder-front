@@ -5,20 +5,21 @@ import getTime from "./time";
 
 const Main = () => {
     const hostURL = "http://localhost:3001"
-    const [link, setLink] = useState("");
+    const [inputLink, setInputLink] = useState("");
+    const [embedLink, setEmbedLink] = useState("");
     const [checked, setChecked] = useState(false)
     const [firstInputValue, setFirstInputValue] = useState(0)
     const [secondInputValue, setSecondInputValue] = useState(1)
     const [duration, setDuration] = useState(10);
-    const distinction = 100;
-    useEffect(() => {
-        console.log(firstInputValue, secondInputValue)
-    })
+    const [distinction, setDistinction] = useState(100);
 
+    //
     const changeLink = (e) => {
-        console.log(link);
-        setLink(e.target.value);
+        console.log(inputLink);
+        setInputLink(e.target.value);
     }
+
+    // Функция отправления запроса на сервер для получения продолжотельности видео
     const findVideo = async (videoUrl) => {
         try {
             const res = await axios.post(`${hostURL}/duration`, {id: videoUrl});
@@ -27,7 +28,8 @@ const Main = () => {
             {
                 const newLink = "https://www.youtube.com/embed/" + res.data.videoID;
                 setDuration(res.data.duration);
-                setLink(newLink);
+                setDistinction(res.data.duration /2);
+                setEmbedLink(newLink);
                 setChecked(true);
             }
         }
@@ -36,7 +38,16 @@ const Main = () => {
         }
     };
 
-    const findSong = () => {
+    // Функция отправления запроса на сервер для получения названия песни из видео
+    const findSong = async (videoUrl) => {
+        try {
+            const res = await axios.post(`${hostURL}/`, {id: videoUrl, start: firstInputValue, end: secondInputValue});
+            console.log("answer: ", res.data);
+        }
+        catch (e) {
+            //Сделать обработчик ошибок
+            throw e;
+        }
 
     };
 
@@ -64,10 +75,10 @@ const Main = () => {
         <div className={"main"} style={!checked? {marginTop: "30vh"}: {marginTop: 35}}>
             <div className={"main-track"}>Что за трек?</div>
             <div className={"main-insert-title"}>Вставьте ссылку на видео с YouTube</div>
-            <input type={"text"} maxLength={70} className={"main-input-link"}  value={link} onChange={changeLink} placeholder={"Введите ссылку на видео...."}/>
+            <input type={"text"} maxLength={70} className={"main-input-link"}  value={inputLink} onChange={changeLink} placeholder={"Введите ссылку на видео...."}/>
             {checked? <div className={"main-container"}>
                 {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-                <iframe className={"main-youtube-player"} width="560" height="370" src={link} frameBorder="0"
+                <iframe className={"main-youtube-player"} width="560" height="370" src={embedLink} frameBorder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen/>
                         <div className={"main-container-text-fields"}>
@@ -80,7 +91,7 @@ const Main = () => {
                     <input type={"range"} min={"0"} max={duration} step={"1"} value={secondInputValue} onChange={changeSecondInputValue}/>
                 </div>
                         </div>:""}
-            <button onClick={ () => !checked? findVideo(link) : findSong(link)}> Найти </button>
+            <button onClick={ () => !checked? findVideo(inputLink) : findSong(inputLink)}> Найти </button>
         </div>
     );
 };
