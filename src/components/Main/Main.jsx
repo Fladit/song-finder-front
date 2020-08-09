@@ -12,6 +12,8 @@ const Main = () => {
     const [secondInputValue, setSecondInputValue] = useState(1)
     const [duration, setDuration] = useState(10);
     const [distinction, setDistinction] = useState(100);
+    const [found, setFound] = useState(false);
+    const [songPage, setSongPage] = useState("");
 
     //
     const changeLink = (e) => {
@@ -43,6 +45,8 @@ const Main = () => {
         try {
             const res = await axios.post(`${hostURL}/`, {id: videoUrl, start: firstInputValue, end: secondInputValue});
             console.log("answer: ", res.data);
+            setFound(true);
+            setSongPage(res.data.result.song_link);
         }
         catch (e) {
             //Сделать обработчик ошибок
@@ -76,6 +80,7 @@ const Main = () => {
             <div className={"main-track"}>Что за трек?</div>
             <div className={"main-insert-title"}>Вставьте ссылку на видео с YouTube</div>
             <input type={"text"} maxLength={70} className={"main-input-link"}  value={inputLink} onChange={changeLink} placeholder={"Введите ссылку на видео...."}/>
+            {!found? <div>
             {checked? <div className={"main-container"}>
                 {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
                 <iframe className={"main-youtube-player"} width="560" height="370" src={embedLink} frameBorder="0"
@@ -92,6 +97,11 @@ const Main = () => {
                 </div>
                         </div>:""}
             <button onClick={ () => !checked? findVideo(inputLink) : findSong(inputLink)}> Найти </button>
+            </div>:
+                <div className={"main-container"}>
+                    {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+                    <iframe className={"main-song-page"} width="560" height="400" src={songPage} frameBorder="0"/>
+                </div>}
         </div>
     );
 };
