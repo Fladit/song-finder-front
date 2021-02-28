@@ -1,5 +1,5 @@
 import React from 'react';
-import "../Main/main.css"
+import "../main.css"
 
 const RangeSlider = ({videoDuration, distinction, firstInputValue,
                          secondInputValue, setFirstInputValue, setSecondInputValue}) => {

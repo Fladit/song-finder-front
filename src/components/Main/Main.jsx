@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import "./main.css"
 import axios from "axios"
-import getTime from "./time";
-import RangeSlider from "../RangeSlider/RangeSlider";
+import SongSegmentFinder from "./SongSegmentFinder/SongSegmentFinder";
 
 const Main = () => {
     const hostURL = "http://localhost:3001"
@@ -14,7 +13,7 @@ const Main = () => {
     const [videoDuration, setVideoDuration] = useState(10);
     const [distinction, setDistinction] = useState(100);
     const [isSongFound, setIsSongFound] = useState(false);
-    const [songPage, setSongPage] = useState("");
+    const [songPageLink, setSongPageLink] = useState("");
 
     //
     const changeLink = (e) => {
@@ -42,19 +41,8 @@ const Main = () => {
     };
 
     // Функция отправления запроса на сервер для получения названия песни из видео
-    const findSong = async (videoUrl) => {
-        try {
-            const res = await axios.post(`${hostURL}/`, {id: videoUrl, start: firstInputValue, end: secondInputValue});
-            console.log("answer: ", res.data);
-            setIsSongFound(true);
-            setSongPage(res.data.result.song_link);
-        }
-        catch (e) {
-            //Сделать обработчик ошибок
-            throw e;
-        }
-
-    };
+    const findSongWrapper = () => findSong(inputLink, hostURL, firstInputValue,
+        secondInputValue, setIsSongFound, setSongPageLink)
 
 
     return (
@@ -62,29 +50,38 @@ const Main = () => {
             <div className={"main-track"}>Что за трек?</div>
             <div className={"main-insert-title"}>Вставьте ссылку на видео с YouTube</div>
             <input type={"text"} maxLength={70} className={"main-input-link"}  value={inputLink} onChange={changeLink} placeholder={"Введите ссылку на видео...."}/>
-            {!isSongFound? <div>
-            {isVideoFound? <div className={"main-container"}>
-                {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-                <iframe className={"main-youtube-player"} width="560" height="370" src={embeddedLink} frameBorder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen/>
-                        <div className={"main-container-text-fields"}>
-                            <div className={"main-container-text-fields-time"}>{getTime(firstInputValue)}</div>
-                            <div className={"main-container-text-fields-text"}> Введите промежуток </div>
-                            <div className={"main-container-text-fields-time"}>{getTime(secondInputValue)}</div>
-                        </div>
-                <RangeSlider firstInputValue={firstInputValue} secondInputValue={secondInputValue}
-                             setFirstInputValue={setFirstInputValue} setSecondInputValue={setSecondInputValue}
-                             distinction={distinction} videoDuration={videoDuration}/>
-                        </div>:""}
-            <button onClick={ () => !isVideoFound? findVideo(inputLink) : findSong(inputLink)}> Найти </button>
-            </div>:
+            {!isSongFound?
+                <div>
+                {isVideoFound?
+                    <div className={"main-container"}>
+                        <SongSegmentFinder secondInputValue={secondInputValue} firstInputValue={firstInputValue}
+                                           distinction={distinction} videoDuration={videoDuration}
+                                           embeddedLink={embeddedLink} setSecondInputValue={setSecondInputValue}
+                                           setFirstInputValue={setFirstInputValue} findSong={findSongWrapper}/>
+                    </div>
+
+                    :<button onClick={ () => findVideo(inputLink)}> Найти видео </button>}
+                </div>:
                 <div className={"main-container"}>
                     {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-                    <iframe className={"main-song-page"} width="560" height="400" src={songPage} frameBorder="0"/>
+                    <iframe className={"main-song-page"} width="560" height="400" src={songPageLink} frameBorder="0"/>
                 </div>}
         </div>
     );
+};
+
+const findSong = async (videoUrl, hostURL, firstInputValue, secondInputValue, setIsSongFound, setSongPageLink) => {
+    try {
+        const res = await axios.post(`${hostURL}/`, {id: videoUrl, start: firstInputValue, end: secondInputValue});
+        console.log("answer: ", res.data);
+        setIsSongFound(true);
+        setSongPageLink(res.data.result.song_link);
+    }
+    catch (e) {
+        //Сделать обработчик ошибок
+        throw e;
+    }
+
 };
 
 export default Main;
