@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import "./main.css"
-import axios from "axios"
 import SongSegmentFinder from "./SongSegmentFinder/SongSegmentFinder";
-import {handleVideoError, handleSongError} from "../../utils/errorHandler";
+import {findVideo, findSong} from "../../utils/findSongAndVideo";
 const hostURL = "http://localhost:3001"
 
 const Main = () => {
+    const [errorMessage, setErrorMessage] = useState("")
     const [inputLink, setInputLink] = useState("");
     const [embeddedLink, setEmbeddedLink] = useState("");
     const [isVideoFound, setIsVideoFound] = useState(false)
@@ -24,11 +24,11 @@ const Main = () => {
 
     // Функция отправления запроса на сервер для получения продолжительности видео
     const findVideoWrapper = async () => findVideo(inputLink, hostURL, setVideoDuration, setDistinction,
-        setEmbeddedLink, setIsVideoFound)
+        setEmbeddedLink, setIsVideoFound, setErrorMessage)
 
     // Функция отправления запроса на сервер для получения названия песни из видео
     const findSongWrapper = async () => findSong(inputLink, hostURL, firstInputValue,
-        secondInputValue, setIsSongFound, setSongPageLink)
+        secondInputValue, setIsSongFound, setSongPageLink, setErrorMessage)
 
 
     return (
@@ -43,10 +43,15 @@ const Main = () => {
                         <SongSegmentFinder secondInputValue={secondInputValue} firstInputValue={firstInputValue}
                                            distinction={distinction} videoDuration={videoDuration}
                                            embeddedLink={embeddedLink} setSecondInputValue={setSecondInputValue}
-                                           setFirstInputValue={setFirstInputValue} findSong={findSongWrapper}/>
+                                           setFirstInputValue={setFirstInputValue} findSong={findSongWrapper}
+                                           errorMessage={errorMessage}
+                        />
                     </div>
-
-                    :<button onClick={findVideoWrapper}> Найти видео </button>}
+                    :
+                    <div>
+                        {errorMessage && <div className={"main-container-error-message"}>{errorMessage}</div>}
+                        <button onClick={findVideoWrapper}> Найти видео </button>
+                    </div>}
                 </div>:
                 <div className={"main-container"}>
                     {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
@@ -54,45 +59,6 @@ const Main = () => {
                 </div>}
         </div>
     );
-};
-
-const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction, setEmbeddedLink, setIsVideoFound) => {
-    try {
-        const res = await axios.post(`${hostURL}/duration`, {id: videoUrl});
-        if (res.data.status === "error") {
-            const handledErrorMessage = handleVideoError(res.data.error)
-            console.log("handledVideoError: ", handledErrorMessage)
-            return ;
-        }
-        console.log(`Duration: ${res.data.duration}`);
-        const newLink = "https://www.youtube.com/embed/" + res.data.videoID;
-        setVideoDuration(res.data.duration);
-        setDistinction(res.data.duration / 2);
-        setEmbeddedLink(newLink);
-        setIsVideoFound(true);
-    }
-    catch (e) {
-        throw e;
-    }
-};
-
-const findSong = async (videoUrl, hostURL, firstInputValue, secondInputValue, setIsSongFound, setSongPageLink) => {
-    try {
-        const res = await axios.post(`${hostURL}/`, {id: videoUrl, start: firstInputValue, end: secondInputValue});
-        if (res.data.status === "error") {
-            const handledErrorMessage = handleSongError(res.data.error)
-            console.log("handledSongError: ", handledErrorMessage)
-            return;
-        }
-        console.log("answer: ", res.data);
-        setIsSongFound(true);
-        setSongPageLink(res.data.result.song_link);
-    }
-    catch (e) {
-        //Сделать обработчик ошибок
-        throw e;
-    }
-
 };
 
 

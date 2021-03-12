@@ -43,6 +43,10 @@
   font-size: 24px;
   padding: 0 35px;
 }
+.main button[has-error-message="true"] {
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
 .main-container {
   width: 560px;
 }
@@ -71,9 +75,16 @@
   height: 40px;
   font-size: 25px;
 }
+.main-container-error-message {
+  width: auto;
+  height: auto;
+  color: red;
+  margin-top: 5px;
+  font-size: 24px;
+}
 .range-slider {
-  width: 200px;
-  height: 40px;
+  width: auto;
+  height: 60px;
   position: relative;
 }
 .range-slider svg,

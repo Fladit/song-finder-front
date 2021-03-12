@@ -2,7 +2,7 @@ import React from 'react';
 import getTime from "../time";
 import RangeSlider from "../RangeSlider/RangeSlider";
 
-const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValue,
+const SongSegmentFinder = ({errorMessage, firstInputValue, secondInputValue, setFirstInputValue,
                            setSecondInputValue, embeddedLink, videoDuration, distinction, findSong}) => {
 
     return (
@@ -19,7 +19,8 @@ const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValu
             <RangeSlider firstInputValue={firstInputValue} secondInputValue={secondInputValue}
                          setFirstInputValue={setFirstInputValue} setSecondInputValue={setSecondInputValue}
                          distinction={distinction} videoDuration={videoDuration}/>
-            <button onClick={findSong}> Найти песню </button>
+            {errorMessage && <div className={"main-container-error-message"}>{errorMessage}</div>}
+            <button onClick={findSong} has-error-message={(!!errorMessage).toString()}> Найти песню </button>
         </div>
     );
 };
