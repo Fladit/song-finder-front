@@ -50,7 +50,7 @@ const Main = () => {
                     :
                     <div>
                         {errorMessage && <div className={"main-container-error-message"}>{errorMessage}</div>}
-                        <button onClick={findVideoWrapper}> Найти видео </button>
+                        <button onClick={findVideoWrapper} has-error-message={(!!errorMessage).toString()}> Найти видео </button>
                     </div>}
                 </div>:
                 <div className={"main-container"}>
