@@ -7,12 +7,12 @@ import "./app.css"
 
 function App() {
   return (
-    <div className={"container"}>
-      <Switch>
-        <Route exact path = '/' component = {Main}/>
-        <Route path = "*" component={NotFound}/>
-      </Switch>
-    </div>
+      <div className={"container"}>
+          <Switch>
+              <Route exact path = '/' component = {Main}/>
+              <Route path = "*" component={NotFound}/>
+          </Switch>
+      </div>
   );
 }
 

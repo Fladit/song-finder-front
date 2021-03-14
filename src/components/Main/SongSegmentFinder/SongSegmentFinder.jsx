@@ -3,7 +3,7 @@ import getTime from "../time";
 import RangeSlider from "../RangeSlider/RangeSlider";
 
 const SongSegmentFinder = ({errorMessage, firstInputValue, secondInputValue, setFirstInputValue,
-                           setSecondInputValue, embeddedLink, videoDuration, distinction, findSong}) => {
+                           setSecondInputValue, embeddedLink, videoDuration, distinction, findSong, localisation}) => {
 
     return (
         <div>
@@ -13,14 +13,16 @@ const SongSegmentFinder = ({errorMessage, firstInputValue, secondInputValue, set
                     allowFullScreen/>
             <div className={"main-container-text-fields"}>
                 <div className={"main-container-text-fields-time"}>{getTime(firstInputValue)}</div>
-                <div className={"main-container-text-fields-text"}> Введите промежуток </div>
+                <div className={"main-container-text-fields-text"}>
+                    {localisation.localisationEntries.CHOOSE_VIDEO_INTERVAL} </div>
                 <div className={"main-container-text-fields-time"}>{getTime(secondInputValue)}</div>
             </div>
             <RangeSlider firstInputValue={firstInputValue} secondInputValue={secondInputValue}
                          setFirstInputValue={setFirstInputValue} setSecondInputValue={setSecondInputValue}
                          distinction={distinction} videoDuration={videoDuration}/>
             {errorMessage && <div className={"main-container-error-message"}>{errorMessage}</div>}
-            <button onClick={findSong} has-error-message={(!!errorMessage).toString()}> Найти песню </button>
+            <button onClick={findSong} has-error-message={(!!errorMessage).toString()}>
+                {localisation.localisationEntries.FIND_SONG_BUTTON_TITTLE} </button>
         </div>
     );
 };

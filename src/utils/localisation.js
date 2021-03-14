@@ -1,20 +1,35 @@
-const ruLocalistion = {
+const localisationDictionary = {
+    RU: "ru",
+    EN: "en",
+}
 
+const ruLocalisation = {
+    MAIN_TITLE: "Что за трек?",
+    INSERT_VIDEO_LINK_TITLE: "Вставьте ссылку на видео с YouTube",
+    INSERT_VIDEO_LINK_PLACEHOLDER: "Введите ссылку на видео....",
+    FIND_VIDEO_BUTTON_TITLE: "Найти видео",
+    FIND_SONG_BUTTON_TITTLE: "Найти песню",
+    CHOOSE_VIDEO_INTERVAL: "Выберите промежуток"
 }
 
 const enLocalisation = {
-
+    MAIN_TITLE: "What's the song?",
+    INSERT_VIDEO_LINK_TITLE: "Insert a link to a YouTube video",
+    INSERT_VIDEO_LINK_PLACEHOLDER: "Enter the link to the video....",
+    FIND_VIDEO_BUTTON_TITLE: "Find video",
+    FIND_SONG_BUTTON_TITTLE: "Find song",
+    CHOOSE_VIDEO_INTERVAL: "Choose the desired video interval"
 }
 
-let currentLocalisation = {localisation: ruLocalistion}
+let currentLocalisation = ruLocalisation
 
-function setLocalisation(localisation) {
-    switch (localisation) {
-        case "ru": {
-            currentLocalisation = ruLocalistion
+function setLocalisation(localisationLanguage) {
+    switch (localisationLanguage) {
+        case localisationDictionary.RU: {
+            currentLocalisation = ruLocalisation
             break;
         }
-        case "en": {
+        case localisationDictionary.EN: {
             currentLocalisation = enLocalisation
             break;
         }
@@ -24,8 +39,8 @@ function setLocalisation(localisation) {
     }
 }
 
-function translate(entry) {
-
+function getLocalisation() {
+    return Object.freeze(currentLocalisation)
 }
 
-export default currentLocalisation
+export {setLocalisation, getLocalisation, localisationDictionary}
