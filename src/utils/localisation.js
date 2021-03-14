@@ -9,7 +9,8 @@ const ruLocalisation = {
     INSERT_VIDEO_LINK_PLACEHOLDER: "Введите ссылку на видео....",
     FIND_VIDEO_BUTTON_TITLE: "Найти видео",
     FIND_SONG_BUTTON_TITTLE: "Найти песню",
-    CHOOSE_VIDEO_INTERVAL: "Выберите промежуток"
+    CHOOSE_VIDEO_INTERVAL: "Выберите промежуток",
+    TRANSLATIONS: "Переводы",
 }
 
 const enLocalisation = {
@@ -18,7 +19,8 @@ const enLocalisation = {
     INSERT_VIDEO_LINK_PLACEHOLDER: "Enter the link to the video....",
     FIND_VIDEO_BUTTON_TITLE: "Find video",
     FIND_SONG_BUTTON_TITTLE: "Find song",
-    CHOOSE_VIDEO_INTERVAL: "Choose the desired video interval"
+    CHOOSE_VIDEO_INTERVAL: "Choose the desired video interval",
+    TRANSLATIONS: "Translations"
 }
 
 let currentLocalisation = ruLocalisation

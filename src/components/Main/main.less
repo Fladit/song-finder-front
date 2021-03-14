@@ -119,3 +119,40 @@ input[type=range]::-webkit-slider-thumb {
   top: 2px;
   margin-top: -7px;
 }
+
+.translation {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  &:hover &-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &-title {
+
+  }
+
+  &-list {
+    display: none;
+
+    &-element {
+      list-style-type: none;
+      margin-left: auto;
+      margin-right: auto;
+      &:hover {
+        color: green;
+      }
+    }
+  }
+}

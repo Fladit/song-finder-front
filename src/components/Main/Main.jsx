@@ -3,12 +3,7 @@ import "./main.css"
 import SongSegmentFinder from "./SongSegmentFinder/SongSegmentFinder";
 import {findVideo, findSong} from "../../utils/findSongAndVideo";
 import useOwnLocalisation from "../../hooks/useOwnLocalisation";
-import {localisationDictionary} from "../../utils/localisation";
-
-const enumLanguages = {
-    [localisationDictionary.EN]: "English",
-    [localisationDictionary.RU]: "Russian"
-}
+import Translations from "./Translations/Translations";
 
 const hostURL = "http://localhost:3001"
 
@@ -42,6 +37,7 @@ const Main = () => {
 
     return (
         <div>
+            <Translations localisation={localisation} />
             <div className={"main"} style={!isVideoFound? {marginTop: "30vh", height: "calc(100% - 30vh)"}
                 : {marginTop: 35, height: "calc(100% - 35px)"}}>
                 <div className={"main-track"}>{localisation.localisationEntries.MAIN_TITLE}</div>

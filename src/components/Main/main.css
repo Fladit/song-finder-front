@@ -105,4 +105,34 @@ input[type=range]::-webkit-slider-thumb {
   top: 2px;
   margin-top: -7px;
 }
+.translation {
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+.translation:hover {
+  cursor: pointer;
+}
+.translation:hover .translation-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.translation-list {
+  display: none;
+}
+.translation-list-element {
+  list-style-type: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+.translation-list-element:hover {
+  color: green;
+}
 /*# sourceMappingURL=main.css.map */
