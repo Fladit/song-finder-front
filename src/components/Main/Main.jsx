@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import "./main.css"
 import SongSegmentFinder from "./SongSegmentFinder/SongSegmentFinder";
 import {findVideo, findSong} from "../../utils/findSongAndVideo";
 import useOwnLocalisation from "../../hooks/useOwnLocalisation";
 import Translations from "./Translations/Translations";
+import serverErrors from "../../utils/serverErrors";
 
 const hostURL = "http://localhost:3001"
 
@@ -19,6 +20,10 @@ const Main = () => {
     const [isSongFound, setIsSongFound] = useState(false);
     const [songPageLink, setSongPageLink] = useState("");
     const localisation = useOwnLocalisation()
+    const handledError = useMemo(() => {
+        return handleError(errorMessage, localisation.localisationEntries.ERRORS)
+    }, [errorMessage, localisation])
+    console.log(handledError)
 
     //
     const changeLink = (e) => {
@@ -52,13 +57,13 @@ const Main = () => {
                                                    distinction={distinction} videoDuration={videoDuration}
                                                    embeddedLink={embeddedLink} setSecondInputValue={setSecondInputValue}
                                                    setFirstInputValue={setFirstInputValue} findSong={findSongWrapper}
-                                                   errorMessage={errorMessage} localisation={localisation}
+                                                   localisation={localisation} handledError={handledError}
                                 />
                             </div>
                             :
                             <div>
-                                {errorMessage && <div className={"main-container-error-message"}>{errorMessage}</div>}
-                                <button onClick={findVideoWrapper} has-error-message={(!!errorMessage).toString()}>
+                                {handledError && <div className={"main-container-error-message"}>{handledError}</div>}
+                                <button onClick={findVideoWrapper} has-error-message={(!!handledError).toString()}>
                                     {localisation.localisationEntries.FIND_VIDEO_BUTTON_TITLE}
                                 </button>
                             </div>}
@@ -71,6 +76,14 @@ const Main = () => {
         </div>
     );
 };
+
+function handleError(errorMessage, localizedErrors) {
+    if (!errorMessage)
+        return ""
+    if (localizedErrors.hasOwnProperty(errorMessage))
+        return localizedErrors[errorMessage]
+    return localizedErrors[serverErrors.UNEXPECTED_SERVER_ERROR]
+}
 
 
 

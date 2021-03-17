@@ -7,9 +7,10 @@ const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction, se
         const res = await axios.post(`${hostURL}/duration`, {id: videoUrl});
         if (res.data.status === "error") {
             //const handledErrorMessage = handleVideoError(res.data.error)
-            const handledErrorMessage = "test"
+            const handledErrorMessage = res.data.error.code
+            console.log(handledErrorMessage)
             setErrorMessage(handledErrorMessage)
-            console.log("handledVideoError: ", handledErrorMessage)
+            //console.log("handledVideoError: ", handledErrorMessage)
             return ;
         }
         console.log(`Duration: ${res.data.duration}`);
@@ -30,9 +31,9 @@ const findSong = async (videoUrl, hostURL, firstInputValue, secondInputValue, se
         const res = await axios.post(`${hostURL}/`, {id: videoUrl, start: firstInputValue, end: secondInputValue});
         if (res.data.status === "error") {
             //const handledErrorMessage = handleSongError(res.data.error)
-            const handledErrorMessage = "test"
+            const handledErrorMessage = res.data.error.code
             setErrorMessage(handledErrorMessage)
-            console.log("handledSongError: ", handledErrorMessage)
+            //console.log("handledSongError: ", handledErrorMessage)
             return;
         }
         console.log("answer: ", res.data);

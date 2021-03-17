@@ -2,8 +2,9 @@ import React from 'react';
 import getTime from "../time";
 import RangeSlider from "../RangeSlider/RangeSlider";
 
-const SongSegmentFinder = ({errorMessage, firstInputValue, secondInputValue, setFirstInputValue,
-                           setSecondInputValue, embeddedLink, videoDuration, distinction, findSong, localisation}) => {
+const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValue,
+                           setSecondInputValue, embeddedLink, videoDuration, distinction, findSong, localisation,
+                           handledError}) => {
 
     return (
         <div>
@@ -20,8 +21,8 @@ const SongSegmentFinder = ({errorMessage, firstInputValue, secondInputValue, set
             <RangeSlider firstInputValue={firstInputValue} secondInputValue={secondInputValue}
                          setFirstInputValue={setFirstInputValue} setSecondInputValue={setSecondInputValue}
                          distinction={distinction} videoDuration={videoDuration}/>
-            {errorMessage && <div className={"main-container-error-message"}>{errorMessage}</div>}
-            <button onClick={findSong} has-error-message={(!!errorMessage).toString()}>
+            {handledError && <div className={"main-container-error-message"}>{handledError}</div>}
+            <button onClick={findSong} has-error-message={(!!handledError).toString()}>
                 {localisation.localisationEntries.FIND_SONG_BUTTON_TITTLE} </button>
         </div>
     );
