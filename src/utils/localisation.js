@@ -1,7 +1,5 @@
-const localisationDictionary = {
-    RU: "ru",
-    EN: "en",
-}
+import localisationDictionary from "./localisationDictionary";
+import getLocalizedErrors from "./errorHandler";
 
 const ruLocalisation = {
     MAIN_TITLE: "Что за трек?",
@@ -11,6 +9,7 @@ const ruLocalisation = {
     FIND_SONG_BUTTON_TITTLE: "Найти песню",
     CHOOSE_VIDEO_INTERVAL: "Выберите промежуток",
     TRANSLATIONS: "Переводы",
+    ERRORS: getLocalizedErrors(localisationDictionary.RU)
 }
 
 const enLocalisation = {
@@ -20,7 +19,8 @@ const enLocalisation = {
     FIND_VIDEO_BUTTON_TITLE: "Find video",
     FIND_SONG_BUTTON_TITTLE: "Find song",
     CHOOSE_VIDEO_INTERVAL: "Choose the desired video interval",
-    TRANSLATIONS: "Translations"
+    TRANSLATIONS: "Translations",
+    ERRORS: getLocalizedErrors(localisationDictionary.EN)
 }
 
 let currentLocalisation = ruLocalisation

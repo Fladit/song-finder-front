@@ -6,7 +6,6 @@ const enumLanguages = {
 }
 
 const Translations = ({localisation}) => {
-    console.log("rerender")
     return (
         <div className={"translation"}>
             <div className={"translation-title"}>{localisation.localisationEntries.TRANSLATIONS}:</div>

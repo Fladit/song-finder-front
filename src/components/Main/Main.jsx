@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./main.css"
 import SongSegmentFinder from "./SongSegmentFinder/SongSegmentFinder";
 import {findVideo, findSong} from "../../utils/findSongAndVideo";

@@ -1,12 +1,13 @@
 import axios from "axios";
-import {handleSongError, handleVideoError} from "./errorHandler";
+//import {handleSongError, handleVideoError} from "./errorHandler";
 
 const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction, setEmbeddedLink, setIsVideoFound,
                          setErrorMessage) => {
     try {
         const res = await axios.post(`${hostURL}/duration`, {id: videoUrl});
         if (res.data.status === "error") {
-            const handledErrorMessage = handleVideoError(res.data.error)
+            //const handledErrorMessage = handleVideoError(res.data.error)
+            const handledErrorMessage = "test"
             setErrorMessage(handledErrorMessage)
             console.log("handledVideoError: ", handledErrorMessage)
             return ;
@@ -28,7 +29,8 @@ const findSong = async (videoUrl, hostURL, firstInputValue, secondInputValue, se
     try {
         const res = await axios.post(`${hostURL}/`, {id: videoUrl, start: firstInputValue, end: secondInputValue});
         if (res.data.status === "error") {
-            const handledErrorMessage = handleSongError(res.data.error)
+            //const handledErrorMessage = handleSongError(res.data.error)
+            const handledErrorMessage = "test"
             setErrorMessage(handledErrorMessage)
             console.log("handledSongError: ", handledErrorMessage)
             return;
