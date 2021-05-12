@@ -23,7 +23,6 @@ const Main = () => {
     const handledError = useMemo(() => {
         return handleError(errorMessage, localisation.localisationEntries.ERRORS)
     }, [errorMessage, localisation])
-    console.log(handledError)
 
     //
     const changeLink = (e) => {

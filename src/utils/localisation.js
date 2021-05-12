@@ -45,4 +45,4 @@ function getLocalisation() {
     return Object.freeze(currentLocalisation)
 }
 
-export {setLocalisation, getLocalisation, localisationDictionary}
+export {setLocalisation, getLocalisation, localisationDictionary, ruLocalisation, enLocalisation}

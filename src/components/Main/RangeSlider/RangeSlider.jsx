@@ -1,14 +1,14 @@
 import React from 'react';
-import "../main.css"
+import "../main.css";
 
 const RangeSlider = ({videoDuration, distinction, firstInputValue,
                          secondInputValue, setFirstInputValue, setSecondInputValue}) => {
     return (
         <div className={"range-slider"}>
-            <input type={"range"} min={"0"} max={videoDuration} step={"1"} value={firstInputValue}
+            <input type={"range"} min={"0"} max={videoDuration} step={"1"} value={firstInputValue} data-testid={"first"}
                    onChange={ (e) =>
                    {changeFirstInputValue(e, secondInputValue, distinction, setFirstInputValue)}} />
-            <input type={"range"} min={"0"} max={videoDuration} step={"1"} value={secondInputValue}
+            <input type={"range"} min={"0"} max={videoDuration} step={"1"} value={secondInputValue} data-testid={"second"}
                    onChange={ (e) =>
                    {changeSecondInputValue(e, firstInputValue, distinction, setSecondInputValue)}}/>
         </div>

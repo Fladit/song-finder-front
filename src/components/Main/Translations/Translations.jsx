@@ -8,10 +8,11 @@ const enumLanguages = {
 const Translations = ({localisation}) => {
     return (
         <div className={"translation"}>
-            <div className={"translation-title"}>{localisation.localisationEntries.TRANSLATIONS}:</div>
-            <ul className={"translation-list"}>
+            <div id={"translation-title"} className={"translation-title"}>{localisation.localisationEntries.TRANSLATIONS}:</div>
+            <ul id={"translation-list"} className={"translation-list"}>
                 {Object.entries(enumLanguages).map(([key, value]) =>
-                    <li key={value} className={"translation-list-element"} onClick={() => {
+                    <li key={value} className={"translation-list-element"}
+                        onClick={() => {
                         if (localisation.language !== value)
                             localisation.setLanguage(key)
                     }}>
