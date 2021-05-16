@@ -13,6 +13,7 @@ const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction,
             //console.log("handledVideoError: ", handledErrorMessage)
             return ;
         }
+        else setErrorMessage("")
         console.log(`Duration: ${res.data.duration}`);
         const newLink = "https://www.youtube.com/embed/" + res.data.videoID;
         setVideoDuration(res.data.duration);
@@ -21,7 +22,8 @@ const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction,
         setIsVideoFound(true);
     }
     catch (e) {
-        throw e;
+        setErrorMessage(e.message)
+        //throw e;
     }
 };
 
@@ -43,7 +45,8 @@ const findSong = async (videoUrl, hostURL, firstInputValue, secondInputValue,
     }
     catch (e) {
         //Сделать обработчик ошибок
-        throw e;
+        console.log(e.message)
+        //throw e;
     }
 
 };

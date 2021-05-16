@@ -11,6 +11,7 @@ const ruErrorLocalisation = {
     [serverErrors.INCORRECT_VIDEO_PARAMETERS_ERROR_BAD_DURATION]: "Продолжительность отрезка видео должна быть не менее 5 секунд",
     [serverErrors.YOUTUBE_API_ERROR]: "Произошла непредвиденная ошибка работы YouTube, попробуйте позже",
     [serverErrors.RECOGNITION_FAILED_ERROR]: "Произошла ошибка распознавания музыки, попробуйте позже",
+    "Network Error": "В данный момент сервис не работает, попробуйте позже",
 }
 
 const enErrorLocalisation = {
@@ -23,6 +24,7 @@ const enErrorLocalisation = {
     [serverErrors.INCORRECT_VIDEO_PARAMETERS_ERROR_BAD_DURATION]: "Duration of video must be 5 sec or more",
     [serverErrors.YOUTUBE_API_ERROR]: "Problems with interaction with the Youtube, please, try again later",
     [serverErrors.RECOGNITION_FAILED_ERROR]: "Recognition is failed, please try again later",
+    "Network Error": "The service is not working at the moment, please try again later"
 }
 
 function getLocalizedErrors(language) {

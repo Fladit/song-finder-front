@@ -69,7 +69,7 @@ const Main = () => {
                     </div>:
                     <div className={"main-container"}>
                         {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
-                        <iframe className={"main-song-page"} width="560" height="400" src={songPageLink} frameBorder="0"/>
+                        <iframe className={"main-song-page"} width="560" height="600" src={songPageLink} frameBorder="0"/>
                     </div>}
             </div>
         </div>

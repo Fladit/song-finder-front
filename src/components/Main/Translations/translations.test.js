@@ -35,9 +35,9 @@ afterEach(() => {
 
  */
 
-describe("render translation window", () => {
+describe("Translations testing", () => {
 
-    test("english translation", async () => {
+    test("english translation rendering", async () => {
         render(<TestTranslations/>)
         expect(screen.getByText(`${enLocalisation.TRANSLATIONS}:`).textContent).toBe(`${enLocalisation.TRANSLATIONS}:`)
     })

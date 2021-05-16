@@ -8,6 +8,7 @@ const videoDuration = 60
 const firstInputTestID = "first"
 const secondInputTestID = "second"
 
+
 describe("Range slider tests", () => {
     test("prohibit set value, when try to set first input value greater or equal to second input value", () => {
         const firstInputValue = 15;
@@ -35,7 +36,7 @@ describe("Range slider tests", () => {
         expect(screen.getByTestId(secondInputTestID).value).toBe((newSecondInputValue).toString())
     })
 
-    test("prohibit set value, when try to set second input value less than first input value", () => {
+    test("prohibit set value, when try to set second input value less or equal to first input value", () => {
         const firstInputValue = 30;
         const secondInputValue = 50;
         const newFirstInputValue = firstInputValue + 5;
