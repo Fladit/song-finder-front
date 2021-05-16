@@ -48,6 +48,9 @@
   margin-top: 20px;
   margin-bottom: 30px;
 }
+.main button[disabled] {
+  background-color: #db7070;
+}
 .main-container {
   width: 560px;
 }

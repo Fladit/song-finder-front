@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import getTime from "../time";
 import RangeSlider from "../RangeSlider/RangeSlider";
+import clientErrors from "../../../utils/clientErrors";
 
 const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValue,
                            setSecondInputValue, embeddedLink, videoDuration, distinction, findSong, localisation,
-                           handledError}) => {
-
+                           handledError, setErrorMessage}) => {
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+    useEffect(() => {
+        if (!isButtonDisabled && (secondInputValue - firstInputValue > distinction)) {
+            setIsButtonDisabled(true)
+            setErrorMessage(clientErrors.BAD_DURATION_DISTINCTION)
+        }
+        else if (isButtonDisabled && (secondInputValue - firstInputValue <= distinction)) {
+            setIsButtonDisabled(false)
+            setErrorMessage("")
+        }
+    }, [firstInputValue, secondInputValue])
     return (
         <div>
             {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
@@ -22,7 +33,7 @@ const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValu
                          setFirstInputValue={setFirstInputValue} setSecondInputValue={setSecondInputValue}
                          distinction={distinction} videoDuration={videoDuration}/>
             {handledError && <div className={"main-container-error-message"}>{handledError}</div>}
-            <button onClick={findSong} has-error-message={(!!handledError).toString()}>
+            <button disabled={isButtonDisabled} onClick={findSong} has-error-message={(!!handledError).toString()}>
                 {localisation.localisationEntries.FIND_SONG_BUTTON_TITTLE} </button>
         </div>
     );

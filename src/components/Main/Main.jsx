@@ -16,7 +16,7 @@ const Main = () => {
     const [firstInputValue, setFirstInputValue] = useState(0)
     const [secondInputValue, setSecondInputValue] = useState(1)
     const [videoDuration, setVideoDuration] = useState(10);
-    const [distinction, setDistinction] = useState(100);
+    const [distinction, setDistinction] = useState(20);
     const [isSongFound, setIsSongFound] = useState(false);
     const [songPageLink, setSongPageLink] = useState("");
     const localisation = useOwnLocalisation()
@@ -57,6 +57,7 @@ const Main = () => {
                                                    embeddedLink={embeddedLink} setSecondInputValue={setSecondInputValue}
                                                    setFirstInputValue={setFirstInputValue} findSong={findSongWrapper}
                                                    localisation={localisation} handledError={handledError}
+                                                   setErrorMessage={setErrorMessage}
                                 />
                             </div>
                             :

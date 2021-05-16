@@ -17,21 +17,39 @@ const RangeSlider = ({videoDuration, distinction, firstInputValue,
 
 const changeFirstInputValue = (e, secondInputValue, distinction, setFirstInputValue) => {
     const value = parseInt(e.target.value);
+    // second version
+    if (value < secondInputValue) {
+        setFirstInputValue(value);
+    }
+
+    // first version
+    /*
     if (value < secondInputValue && ((secondInputValue - value) <= distinction)) {
         //console.log("yes ", value, " ", secondInputValue);
         setFirstInputValue(value);
         //e.preventDefault();
     }
+
+     */
+
 };
 
 const changeSecondInputValue = (e, firstInputValue, distinction, setSecondInputValue) => {
     const value = parseInt(e.target.value);
-    //console.log(typeof e.target.value, typeof secondInputValue, "70" > 100,  70 > 100, "70" > "100")
+    // second version
+    if (value > firstInputValue)
+    {
+        setSecondInputValue(value);
+    }
+    //first version
+    /*
     if (value > firstInputValue && (value - firstInputValue <= distinction))
     {
         //console.log("yes", firstInputValue, value);
         setSecondInputValue(value);
     }
+
+     */
 
 };
 

@@ -1,4 +1,6 @@
 import axios from "axios";
+import clientErrors from "./clientErrors";
+import serverErrors from "./serverErrors";
 //import {handleSongError, handleVideoError} from "./errorHandler";
 
 const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction,
@@ -17,12 +19,14 @@ const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction,
         console.log(`Duration: ${res.data.duration}`);
         const newLink = "https://www.youtube.com/embed/" + res.data.videoID;
         setVideoDuration(res.data.duration);
-        setDistinction(res.data.duration / 2);
+        //setDistinction(res.data.duration / 2);
         setEmbeddedLink(newLink);
         setIsVideoFound(true);
     }
     catch (e) {
-        setErrorMessage(e.message)
+        if (e.message === clientErrors.NETWORK_ERROR)
+            setErrorMessage(e.message)
+        else setErrorMessage(serverErrors.UNEXPECTED_SERVER_ERROR)
         //throw e;
     }
 };
@@ -35,18 +39,22 @@ const findSong = async (videoUrl, hostURL, firstInputValue, secondInputValue,
         if (res.data.status === "error") {
             //const handledErrorMessage = handleSongError(res.data.error)
             const handledErrorMessage = res.data.error.code
+            console.log(handledErrorMessage)
             setErrorMessage(handledErrorMessage)
             //console.log("handledSongError: ", handledErrorMessage)
             return;
         }
         console.log("answer: ", res.data);
-        setIsSongFound(true);
-        setSongPageLink(res.data.result.song_link);
+        if (res.data.result) {
+            setIsSongFound(true);
+            setSongPageLink(res.data.result.song_link);
+        }
+        else {
+            setErrorMessage("Песня не была найдена")
+        }
     }
     catch (e) {
-        //Сделать обработчик ошибок
-        console.log(e.message)
-        //throw e;
+        setErrorMessage(e.message)
     }
 
 };
