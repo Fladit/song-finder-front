@@ -4,13 +4,14 @@ import {act} from "react-dom/test-utils";
 import Main from "./Main";
 import {enLocalisation} from "../../utils/localisation";
 import axios from "axios";
+import serverErrors from "../../utils/serverErrors";
 
 const secondInputTestID = "second"
 jest.mock("axios")
 
 describe("Testing the Main Component", () => {
     const localisation = enLocalisation
-    test("song recognition from existing youtube video", async () => {
+    test("successful song recognition from existing youtube video", async () => {
         const {container} = render(<Main/>)
         const youtubeVideoLink = "https://www.youtube.com/watch?v=FIbNPViilOU&ab_channel=HAUNTEDFAMILYHA"
         const songTitle = "Dezhavyu"
@@ -59,5 +60,31 @@ describe("Testing the Main Component", () => {
         expect(container.getElementsByClassName("main-song-page")[0].src).toBe(songInfo.result.song_link)
     })
 
+    test("invalid youtube video link", async () => {
+        render(<Main/>)
+        const incorrectYoutubeVideoLink = "https://www.youtube.com/watch?v=a"
+        const videoLinkInput = screen.getByPlaceholderText(localisation.INSERT_VIDEO_LINK_PLACEHOLDER)
+        act(() => {
+            fireEvent.change(videoLinkInput, {target: {value: incorrectYoutubeVideoLink}})
+        })
+        expect(videoLinkInput.value).toBe(incorrectYoutubeVideoLink)
+        const videoInfo = {
+            status: 'error',
+            error: {
+                code: '3',
+                name: 'IncorrectVideoLinkError',
+                message: 'Incorrect video link.'
+            }
+        }
+        const videoResp = {data: videoInfo}
+        axios.post.mockResolvedValue(videoResp)
+
+
+        act(() => {
+            fireEvent.click(screen.getByText(localisation.FIND_VIDEO_BUTTON_TITLE))
+        })
+        await waitForElement(() => screen.getByText(localisation.ERRORS[serverErrors.INCORRECT_VIDEO_LINK_ERROR]))
+        expect(screen.getByText(localisation.ERRORS[serverErrors.INCORRECT_VIDEO_LINK_ERROR])).toBeDefined()
+    })
 
 })
