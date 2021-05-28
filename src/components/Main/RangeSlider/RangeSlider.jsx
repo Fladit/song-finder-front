@@ -1,21 +1,21 @@
 import React from 'react';
 import "../main.css";
 
-const RangeSlider = ({videoDuration, distinction, firstInputValue,
+const RangeSlider = ({videoDuration, firstInputValue,
                          secondInputValue, setFirstInputValue, setSecondInputValue}) => {
     return (
         <div className={"range-slider"}>
             <input type={"range"} min={"0"} max={videoDuration} step={"1"} value={firstInputValue} data-testid={"first"}
                    onChange={ (e) =>
-                   {changeFirstInputValue(e, secondInputValue, distinction, setFirstInputValue)}} />
+                   {changeFirstInputValue(e, secondInputValue, setFirstInputValue)}} />
             <input type={"range"} min={"0"} max={videoDuration} step={"1"} value={secondInputValue} data-testid={"second"}
                    onChange={ (e) =>
-                   {changeSecondInputValue(e, firstInputValue, distinction, setSecondInputValue)}}/>
+                   {changeSecondInputValue(e, firstInputValue, setSecondInputValue)}}/>
         </div>
     );
 };
 
-const changeFirstInputValue = (e, secondInputValue, distinction, setFirstInputValue) => {
+const changeFirstInputValue = (e, secondInputValue, setFirstInputValue) => {
     const value = parseInt(e.target.value);
     // second version
     if (value < secondInputValue) {
@@ -34,7 +34,7 @@ const changeFirstInputValue = (e, secondInputValue, distinction, setFirstInputVa
 
 };
 
-const changeSecondInputValue = (e, firstInputValue, distinction, setSecondInputValue) => {
+const changeSecondInputValue = (e, firstInputValue, setSecondInputValue) => {
     const value = parseInt(e.target.value);
     // second version
     if (value > firstInputValue)

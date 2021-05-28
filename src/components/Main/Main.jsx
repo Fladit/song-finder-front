@@ -16,7 +16,6 @@ const Main = () => {
     const [firstInputValue, setFirstInputValue] = useState(0)
     const [secondInputValue, setSecondInputValue] = useState(1)
     const [videoDuration, setVideoDuration] = useState(10);
-    const [distinction, setDistinction] = useState(20);
     const [isSongFound, setIsSongFound] = useState(false);
     const [songPageLink, setSongPageLink] = useState("");
     const localisation = useOwnLocalisation()
@@ -31,7 +30,7 @@ const Main = () => {
     }
 
     // Функция отправления запроса на сервер для получения продолжительности видео
-    const findVideoWrapper = async () => findVideo(inputLink, hostURL, setVideoDuration, setDistinction,
+    const findVideoWrapper = async () => findVideo(inputLink, hostURL, setVideoDuration,
         setEmbeddedLink, setIsVideoFound, setErrorMessage)
 
     // Функция отправления запроса на сервер для получения названия песни из видео
@@ -53,7 +52,7 @@ const Main = () => {
                         {isVideoFound?
                             <div className={"main-container"}>
                                 <SongSegmentFinder secondInputValue={secondInputValue} firstInputValue={firstInputValue}
-                                                   distinction={distinction} videoDuration={videoDuration}
+                                                   videoDuration={videoDuration}
                                                    embeddedLink={embeddedLink} setSecondInputValue={setSecondInputValue}
                                                    setFirstInputValue={setFirstInputValue} findSong={findSongWrapper}
                                                    localisation={localisation} handledError={handledError}
@@ -78,7 +77,7 @@ const Main = () => {
 };
 
 function handleError(errorMessage, localizedErrors) {
-    if (!errorMessage)
+    if (errorMessage === "")
         return ""
     if (localizedErrors.hasOwnProperty(errorMessage))
         return localizedErrors[errorMessage]

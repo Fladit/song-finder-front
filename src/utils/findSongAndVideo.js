@@ -3,7 +3,7 @@ import clientErrors from "./clientErrors";
 import serverErrors from "./serverErrors";
 //import {handleSongError, handleVideoError} from "./errorHandler";
 
-const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction,
+const findVideo = async (videoUrl, hostURL, setVideoDuration,
                          setEmbeddedLink, setIsVideoFound, setErrorMessage) => {
     try {
         const res = await axios.post(`${hostURL}/duration`, {id: videoUrl});
@@ -19,7 +19,6 @@ const findVideo = async (videoUrl, hostURL, setVideoDuration, setDistinction,
         console.log(`Duration: ${res.data.duration}`);
         const newLink = "https://www.youtube.com/embed/" + res.data.videoID;
         setVideoDuration(res.data.duration);
-        //setDistinction(res.data.duration / 2);
         setEmbeddedLink(newLink);
         setIsVideoFound(true);
     }
@@ -50,6 +49,7 @@ const findSong = async (videoUrl, hostURL, firstInputValue, secondInputValue,
             setSongPageLink(res.data.result.song_link);
         }
         else {
+            console.log("song is not found")
             setErrorMessage("Песня не была найдена")
         }
     }

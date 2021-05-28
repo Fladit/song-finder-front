@@ -2,19 +2,32 @@ import React, {useEffect, useState} from 'react';
 import getTime from "../time";
 import RangeSlider from "../RangeSlider/RangeSlider";
 import clientErrors from "../../../utils/clientErrors";
+import serverErrors from "../../../utils/serverErrors";
+
+const minDistinction = 5;
+const maxDistinction = 20;
 
 const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValue,
-                           setSecondInputValue, embeddedLink, videoDuration, distinction, findSong, localisation,
+                           setSecondInputValue, embeddedLink, videoDuration, findSong, localisation,
                            handledError, setErrorMessage}) => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false)
     useEffect(() => {
-        if (!isButtonDisabled && (secondInputValue - firstInputValue > distinction)) {
-            setIsButtonDisabled(true)
-            setErrorMessage(clientErrors.BAD_DURATION_DISTINCTION)
+        const difference = secondInputValue - firstInputValue
+        if (!isButtonDisabled) {
+            if (difference < minDistinction) {
+                setIsButtonDisabled(true)
+                setErrorMessage(serverErrors.INCORRECT_VIDEO_PARAMETERS_ERROR_BAD_DURATION)
+            }
+            else if (difference > maxDistinction) {
+                setIsButtonDisabled(true)
+                setErrorMessage(clientErrors.BAD_DURATION_DISTINCTION)
+            }
         }
-        else if (isButtonDisabled && (secondInputValue - firstInputValue <= distinction)) {
-            setIsButtonDisabled(false)
-            setErrorMessage("")
+        else {
+            if (difference >= minDistinction && difference <= maxDistinction) {
+                setIsButtonDisabled(false)
+                setErrorMessage("")
+            }
         }
     }, [firstInputValue, secondInputValue])
     return (
@@ -31,7 +44,7 @@ const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValu
             </div>
             <RangeSlider firstInputValue={firstInputValue} secondInputValue={secondInputValue}
                          setFirstInputValue={setFirstInputValue} setSecondInputValue={setSecondInputValue}
-                         distinction={distinction} videoDuration={videoDuration}/>
+                         videoDuration={videoDuration}/>
             {handledError && <div className={"main-container-error-message"}>{handledError}</div>}
             <button disabled={isButtonDisabled} onClick={findSong} has-error-message={(!!handledError).toString()}>
                 {localisation.localisationEntries.FIND_SONG_BUTTON_TITTLE} </button>
