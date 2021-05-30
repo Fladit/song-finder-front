@@ -11,6 +11,8 @@ const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValu
                            setSecondInputValue, embeddedLink, videoDuration, findSong, localisation,
                            handledError, setErrorMessage}) => {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+    const [isSpinnerActive, setIsSpinnerActive] = useState(false)
+
     useEffect(() => {
         const difference = secondInputValue - firstInputValue
         if (!isButtonDisabled) {
@@ -46,10 +48,21 @@ const SongSegmentFinder = ({firstInputValue, secondInputValue, setFirstInputValu
                          setFirstInputValue={setFirstInputValue} setSecondInputValue={setSecondInputValue}
                          videoDuration={videoDuration}/>
             {handledError && <div className={"main-container-error-message"}>{handledError}</div>}
-            <button disabled={isButtonDisabled} onClick={findSong} has-error-message={(!!handledError).toString()}>
+            {isSpinnerActive &&
+            <div style={{height: "5em", position: "relative", }}>
+                <div className={"loader"}/>
+            </div>}
+            <button disabled={isButtonDisabled} onClick={() => findSongObserver(setIsSpinnerActive, findSong)} has-error-message={(!!handledError).toString()}>
                 {localisation.localisationEntries.FIND_SONG_BUTTON_TITTLE} </button>
         </div>
     );
 };
+
+
+async function findSongObserver(setIsSpinnerActive, findSong) {
+    setIsSpinnerActive(true)
+    await findSong()
+    setIsSpinnerActive(false)
+}
 
 export default SongSegmentFinder;

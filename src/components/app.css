@@ -3,7 +3,8 @@
   padding: 0;
 }
 body {
-  background: url("../assets/main-background.jpg") no-repeat;
+  background: url("../assets/main-background.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 .container {
   width: 1080px;
